@@ -1,0 +1,57 @@
+tamacat-httpd Tomcat Integration
+=================================
+- Reverse proxy with Tomcat embedded integration.
+- tamacat-httpd and Tomcat works in the same process. 
+- Implements TomcatHandler based on ReverseProxyHandler.
+
+JARS
+=====
+lib/tamacat-httpd-tomcat8-0.18.jar
+
+Requires third party jars:
+- lib/tomcat-embed-core-8.0.18.jar
+- lib/tomcat-embed-jasper-8.0.18.jar
+- lib/tomcat-embed-logging-log4j-8.0.18.jar
+- lib/ecj-4.4.1.jar
+
+
+SETTINGS
+=========
+1) httpd.xml
+-------------------
+  <bean id="server" class="org.tamacat.httpd.tomcat.TomcatHttpEngine">
+
+  * Before -> after:
+    org.tamacat.httpd.core.HttpEngine -> org.tamacat.httpd.tomcat.TomcatHttpEngine
+
+
+2) url-config.xml
+-------------------
+  <url path="/examples/" type="normal" handler="TomcatHandler" />
+
+
+3) components.xml
+-------------------
+  <bean id="TomcatHandler" class="org.tamacat.httpd.tomcat.TomcatHandler">
+    <property name="httpFilter">
+      <ref bean="AccessLogFilter" />
+    </property>
+    <property name="port">
+      <value>8080</value>
+    </property>
+    <property name="webapps">
+      <value>${server.home}/webapps</value>
+    </property>
+    <property name="work">
+      <value>${server.home}/work</value>
+    </property>
+    <property name="httpResponseInterceptor" mode="add">
+      <ref bean="html" />
+    </property>
+  </bean>
+
+
+DEPLOY WEB APPLICATIONS
+========================
+- A WAR file is arranged to a webapps directory. 
+- If a tamacat-httpd start is carried out, a WAR file will be arranged automatically.
