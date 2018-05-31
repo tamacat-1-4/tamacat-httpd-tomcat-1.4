@@ -5,6 +5,7 @@
 package org.tamacat.httpd.tomcat;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
@@ -18,7 +19,7 @@ public class TomcatManager {
 
 	static final Log LOG = LogFactory.getLog(TomcatManager.class);
 	
-	static final HashMap<Integer, Tomcat> MANAGER = new HashMap<Integer, Tomcat>();
+	static final Map<Integer, Tomcat> MANAGER = new HashMap<>();
 	
 	/**
 	 * The instance corresponding to a port is returned. 
