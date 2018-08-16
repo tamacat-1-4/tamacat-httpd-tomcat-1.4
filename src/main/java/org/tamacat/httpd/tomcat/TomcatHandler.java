@@ -29,7 +29,7 @@ public class TomcatHandler extends ReverseProxyHandler {
 	static final Log LOG = LogFactory.getLog(TomcatHandler.class);
 
 	protected String serverHome;
-	protected String tomcatHost = "http://localhost";
+	protected String hostname = "localhost";
 	protected int port = 8080;
 	protected String webapps = "./webapps";
 	protected String work = "${server.home}";
@@ -45,7 +45,7 @@ public class TomcatHandler extends ReverseProxyHandler {
 		super.setServiceUrl(serviceUrl);
 		ReverseUrl reverseUrl = new DefaultReverseUrl(serviceUrl);
 		try {
-			reverseUrl.setReverse(new URL(tomcatHost + ":" + port + serviceUrl.getPath()));
+			reverseUrl.setReverse(new URL("http://"+hostname+":"+port+serviceUrl.getPath()));
 			serviceUrl.setReverseUrl(reverseUrl);
 
 			tomcat = TomcatManager.getInstance(port);
@@ -60,6 +60,10 @@ public class TomcatHandler extends ReverseProxyHandler {
 		} catch (Exception e) {
 			LOG.warn(e.getMessage(), e);
 		}
+	}
+	
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
 	}
 
 	public void setPort(int port) {
