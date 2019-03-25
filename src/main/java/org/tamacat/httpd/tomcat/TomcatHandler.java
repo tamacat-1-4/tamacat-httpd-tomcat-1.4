@@ -52,6 +52,7 @@ public class TomcatHandler extends ReverseProxyHandler {
 			tomcat.setBaseDir(getWork());
 			String contextRoot = getWebapps() + serviceUrl.getPath();
 
+			LOG.info("tomcat-embeded port=" + port+ ", path="+serviceUrl.getPath());
 			// ProtectionDomain domain = TomcatHandler.class.getProtectionDomain();
 			// URL location = domain.getCodeSource().getLocation();
 			String baseDir = new File(contextRoot).getAbsolutePath();
