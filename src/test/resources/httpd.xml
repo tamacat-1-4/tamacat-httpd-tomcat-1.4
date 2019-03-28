@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-  <bean id="server" class="org.tamacat.httpd.tomcat.TomcatHttpEngine">
+  <bean id="tomcat" class="org.tamacat.httpd.middleware.TomcatEmbeded" />
+
+  <bean id="server" class="org.tamacat.httpd.core.UnifiedHttpEngine">
+    <property name="middleware">
+      <ref bean="tomcat" />
+    </property>
     <property name="propertiesName">
       <value>server.properties</value>
     </property>

@@ -15,15 +15,15 @@ Requires third party jars:
 - commons-collections-3.2.1.jar
 - commons-lang-2.4.jar
 - commons-logging-1.2.jar
-- ecj-3.15.0.jar
+- ecj-4.6.3.jar
 - httpclient-4.5.7.jar
 - httpcore-4.4.11.jar
 - log4j-1.2.17.jar
 - oro-2.0.8.jar
-- tomcat-annotations-api-8.5.38.jar
-- tomcat-embed-core-8.5.38.jar
-- tomcat-embed-el-8.5.38.jar
-- tomcat-embed-jasper-8.5.38.jar
+- tomcat-annotations-api-8.5.39.jar
+- tomcat-embed-core-8.5.39.jar
+- tomcat-embed-el-8.5.39.jar
+- tomcat-embed-jasper-8.5.39.jar
 - tomcat-embed-logging-log4j-8.5.2.jar
 - velocity-1.7.jar
 
@@ -31,10 +31,19 @@ SETTINGS
 =========
 1) httpd.xml
 -------------------
-  <bean id="server" class="org.tamacat.httpd.tomcat.TomcatHttpEngine">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+  <bean id="tomcat" class="org.tamacat.httpd.middleware.TomcatEmbeded" />
 
-  * Before -> after:
-    org.tamacat.httpd.core.HttpEngine -> org.tamacat.httpd.tomcat.TomcatHttpEngine
+  <bean id="server" class="org.tamacat.httpd.core.UnifiedHttpEngine">
+    <property name="middleware">
+      <ref bean="tomcat" />
+    </property>
+    <property name="propertiesName">
+      <value>server.properties</value>
+    </property>
+  </bean>
+</beans>
 
 
 2) url-config.xml
@@ -47,6 +56,9 @@ SETTINGS
   <bean id="TomcatHandler" class="org.tamacat.httpd.tomcat.TomcatHandler">
     <property name="httpFilter">
       <ref bean="AccessLogFilter" />
+    </property>
+    <property name="hostname">
+      <value>localhost</value>
     </property>
     <property name="port">
       <value>8080</value>

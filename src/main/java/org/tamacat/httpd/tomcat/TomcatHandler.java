@@ -102,7 +102,6 @@ public class TomcatHandler extends ReverseProxyHandler {
 		if (work.indexOf("${server.home}") >= 0) {
 			this.work = work.replace("${server.home}", getServerHome()).replace("\\", "/");//.replaceAll("/work$", "");
 		}
-		System.out.println(work);
 		return work;
 	}
 }
