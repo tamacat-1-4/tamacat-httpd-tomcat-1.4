@@ -1,0 +1,9 @@
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="p" uri="http://tamacat.org/taglib/page" %>
+<%@ taglib prefix="t" uri="http://tamacat.org/taglib/input" %>
+<%@ taglib prefix="f" uri="http://tamacat.org/taglib/functions" %>

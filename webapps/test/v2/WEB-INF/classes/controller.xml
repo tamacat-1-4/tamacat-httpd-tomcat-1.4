@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="processor" class="org.tamacat.mvc.action.ActionProcessor" />	
+	<bean id="action" class="org.tamacat.mvc.impl.ActionHandler">
+		<property name="actionProcessor">
+			<ref bean="processor" />
+		</property>
+		<property name="packageName">
+			<value>org.tamacat.test.v2.action</value>
+		</property>
+	</bean>
+	
+	<bean id="dispatcher" class="org.tamacat.mvc.impl.DefaultDispatcher">
+		<property name="rootPath">
+			<value>/WEB-INF/jsp</value>
+		</property>
+	</bean>
+
+	<bean id="v2" class="org.tamacat.mvc.impl.DefaultController">
+		<property name="handler">
+			<ref bean="action" />
+		</property>
+		<property name="handler">
+			<ref bean="dispatcher" />
+		</property>
+	</bean>
+</beans>

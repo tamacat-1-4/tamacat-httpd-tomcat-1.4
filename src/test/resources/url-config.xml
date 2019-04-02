@@ -2,5 +2,11 @@
 <service-config>
   <service>
     <url path="/examples/" type="normal" handler="TomcatHandler" />
+    <url path="/test/v1/" type="reverse" handler="TomcatHandler">
+      <reverse>http://localhost:8080/test/v1/</reverse>
+    </url>
+    <url path="/test/v2/" type="reverse" handler="TomcatHandler">
+      <reverse>http://localhost:8080/test/v2/</reverse>
+    </url>
   </service>
 </service-config>

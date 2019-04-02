@@ -24,6 +24,11 @@
     <property name="webapps">
       <value>${server.home}/webapps</value>
     </property>
+    <!--
+    <property name="contextPath">
+      <value>/examples</value>
+    </property>
+    -->
     <property name="httpResponseInterceptor" mode="add">
       <ref bean="html" />
     </property>

@@ -32,6 +32,7 @@ public class TomcatHandler extends ReverseProxyHandler {
 	protected String hostname = "localhost";
 	protected int port = 8080;
 	protected String webapps = "./webapps";
+	protected String contextPath;
 	protected String work = "${server.home}";
 	protected Tomcat tomcat;
 	
@@ -43,16 +44,21 @@ public class TomcatHandler extends ReverseProxyHandler {
 	@Override
 	public void setServiceUrl(ServiceUrl serviceUrl) {
 		super.setServiceUrl(serviceUrl);
-		ReverseUrl reverseUrl = new DefaultReverseUrl(serviceUrl);
+		ReverseUrl reverseUrl = serviceUrl.getReverseUrl();
 		try {
-			reverseUrl.setReverse(new URL("http://"+hostname+":"+port+serviceUrl.getPath()));
-			serviceUrl.setReverseUrl(reverseUrl);
+			if (reverseUrl == null) {
+				reverseUrl = new DefaultReverseUrl(serviceUrl);
+				reverseUrl.setReverse(new URL("http://"+hostname+":"+port+serviceUrl.getPath()));
+				serviceUrl.setReverseUrl(reverseUrl);
+			}
 
 			tomcat = TomcatManager.getInstance(port);
 			tomcat.setBaseDir(getWork());
 			String contextRoot = getWebapps() + serviceUrl.getPath();
-
-			LOG.info("tomcat-embeded port=" + port+ ", path="+serviceUrl.getPath());
+			if (StringUtils.isNotEmpty(contextPath)) {
+				contextRoot = getWebapps() + contextPath;
+			}
+			LOG.info("tomcat-embeded port="+port+", path="+serviceUrl.getPath()+", contextRoot="+contextRoot);
 			// ProtectionDomain domain = TomcatHandler.class.getProtectionDomain();
 			// URL location = domain.getCodeSource().getLocation();
 			String baseDir = new File(contextRoot).getAbsolutePath();
@@ -90,6 +96,10 @@ public class TomcatHandler extends ReverseProxyHandler {
 		}
 	}
 
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
+	
 	protected String getWebapps() {
 		return webapps;
 	}
